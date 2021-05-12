@@ -12,7 +12,7 @@ userRouter.post("/users", async (req, res) => {
   try {
     await user.save();
     const token = await user.generateAuthToken();
-    sendWelcomeEmail(user.email, user.name)
+    await sendWelcomeEmail(user.email, user.name)
     //res.cookie('auth_token', token)
     //res.sendFile(path.resolve(__dirname, '..', 'views', 'private.html'))
     res.status(201).send({ user, token });
@@ -69,9 +69,9 @@ userRouter.post("/login", async (req, res) => {
     const token = await user.generateAuthToken();
     //res.cookie('auth_token', token)
     //res.sendFile(path.resolve(__dirname, '..', 'views', 'private.html'))
-    res.status(201).send({ user, token });
+    res.status(200).send({ user, token });
   } catch (e) {
-    res.status(502).send(e);
+    res.status(400).send(e);
   }
 });
 
